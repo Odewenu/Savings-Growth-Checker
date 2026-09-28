@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Savings Growth Checker</title>
+  </head>
+
+  <body>
+    <h1>Savings Growth Checker</h1>
+
+    <input
+      type="text"
+      id="monthlySavings"
+      placeholder="Monthly savings amount"
+    />
+
+    <input type="text" id="savingsGoal" placeholder="Savings goal" />
+
+    <button onclick="trackSavings()">Track My Savings</button>
+
+    <p id="display"></p>
+
+    <script>
+      function trackSavings() {
+        let monthlyInput = document.getElementById("monthlySavings").value;
+        let goalInput = document.getElementById("savingsGoal").value;
+
+        if (
+          monthlyInput === "" ||
+          goalInput === "" ||
+          isNaN(monthlyInput) ||
+          isNaN(goalInput)
+        ) {
+          document.getElementById("display").innerText =
+            "Please enter valid numbers";
+          return;
+        }
+
+        let monthlySavings = Number(monthlyInput);
+        let savingsGoal = Number(goalInput);
+
+        let totalSaved = 0;
+        let output = "";
+        let goalReached = false;
+
+        for (let month = 1; month <= 12; month++) {
+          totalSaved += monthlySavings;
+
+          if (totalSaved >= savingsGoal && goalReached === false) {
+            output += `Month ${month}: $${totalSaved} saved Goal reached!<br>`;
+            goalReached = true;
+          } else {
+            output += `Month ${month}: $${totalSaved} saved<br>`;
+          }
+        }
+
+        if (goalReached) {
+          output += `<br>After 12 months, you saved $${totalSaved}. Your savings goal was reached.`;
+        } else {
+          output += `<br>After 12 months, you saved $${totalSaved}. Your savings goal was not reached.`;
+        }
+
+        document.getElementById("display").innerHTML = output;
+      }
+    </script>
+  </body>
+</html>
